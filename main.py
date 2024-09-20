@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Response
+import os
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import networkx as nx
@@ -35,3 +36,9 @@ async def validate_dag(graph_data: GraphData):
         return {"message": "This Pipeline you made up is a DAG."}
     else:
         return {"message": "The Pipeline you made up is not a DAG."}
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Render assigns the PORT env variable
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=port)
